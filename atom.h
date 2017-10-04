@@ -12,7 +12,8 @@ public:
   Atom (string s):_symbol(s) {}
   bool operator ==(Atom a) {return _symbol == a._symbol;}
   string _symbol;
-  //bool match(Number number);
+  bool match(Number number);
+  bool match(Variable& variable);
 };
 
 #endif

@@ -42,6 +42,7 @@ TEST (Number, matchSuccessToVar) {
   ASSERT_TRUE(N5.match(X));
   //ASSERT_TRUE(N25.match(X));
   //ASSERT_EQ(N5.value(),X.value());
+  //cout <<"X:value = " << X.value() << endl;
 }
 
 //?- tom=25.
@@ -49,52 +50,87 @@ TEST (Number, matchSuccessToVar) {
 TEST (Atom, matchFailureDiffConstant) {
   Atom tom("tom");
   Number N5("N5","5");
-  //ASSERT_TRUE(tom.match(N5));
+  ASSERT_FALSE(tom.match(N5));
 }
 
 // ?- tom = X.
 // X = tom.
 TEST (Atom, matchSuccessToVar) {
-
+  Atom tom("tom");
+  Variable X("X");
+  //cout <<"X:value = " << X.value() << endl;
+  ASSERT_TRUE(tom.match(X));
 }
 
 // ?- X=tom, tom=X.
 // X = tom.
 TEST (Atom, matchSuccessToVarInstantedToDiffConstant) {
-
+  Atom tom("tom");
+  Variable X("X");
+  X.match(tom);
+  ASSERT_TRUE(tom.match(X));
+  //cout <<"X:value = " << X.value() << endl;
 }
 
 // ?- X=jerry, tom=X.
 // false.
 TEST (Atom, matchFailureToVarInstantedToDiffConstant) {
-
+  Atom jerry("jerry");
+  Atom tom("tom");
+  Variable X("X");
+  //ASSERT_TRUE(X.match(jerry));
+  X.match(jerry);
+  ASSERT_FALSE(tom.match(X));
+  //cout <<"X:value = " << X.value() << endl;
 }
 
 // ?- X = 5.
 // X = 5.
 TEST (Var, matchSuccessToNumber) {
-
+  Number N5("N5","5");
+  Variable X("X");
+  ASSERT_TRUE(X.match(N5));
+  //cout <<"X:value = " << X.value() << endl;
 }
 
 // ?- X=25, X= 100.
 // false.
 TEST (Var, matchFailureToTwoDiffNumbers) {
-
+  Number N25("N25","25");
+  Number N100("N100","100");
+  Variable X("X");
+  X.match(N25);
+  ASSERT_FALSE(X.match(N100));
+  //cout <<"X:value = " << X.value() << endl;
 }
 
 // ?- X=tom, X= 25.
 // false.
 TEST (Var, matchSuccessToAtomThenFailureToNumber) {
-
+  Atom tom("tom");
+  Number N25("N25","25");
+  Variable X("X");
+  X.match(tom);
+  ASSERT_FALSE(X.match(N25));
+  //cout <<"X:value = " << X.value() << endl;
 }
 //?- tom=X, 25=X.
 //false.
 TEST (Var, matchSuccessToAtomThenFailureToNumber2) {
-
+  Atom tom("tom");
+  Number N25("N25","25");
+  Variable X("X");
+  tom.match(X);
+  ASSERT_FALSE(N25.match(X));
+  //cout <<"X:value = " << X.value() << endl;
 }
 //?- X=tom, X=tom.
 //true.
 TEST(Var, reAssignTheSameAtom){
-
+  Atom tom("tom");
+  Variable X("X");
+  X.match(tom);
+  ASSERT_TRUE(X.match(tom));
+  //cout <<"X:value = " << X.value() << endl;
 }
 #endif

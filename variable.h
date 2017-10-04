@@ -14,6 +14,8 @@ public:
   string const _symbol;
   string value();
   bool match( Atom atom );
+  bool match( string s );
+  bool match( Number number );
 
 private:
   string _value;
