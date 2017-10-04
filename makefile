@@ -33,8 +33,8 @@ mainNumber.o: utTerm.h mainNumber.cpp
 	g++ -std=gnu++11 -c mainNumber.cpp
 number.o: number.h number.cpp
 	g++ -std=gnu++11 -c number.cpp
-variable.o: variable.h variable.cpp
-	g++ -std=gnu++11 -c variable.cpp
+#variable.o: variable.h variable.cpp
+	#g++ -std=gnu++11 -c variable.cpp
 
 clean:
 ifeq (${OS}, Windows_NT)
