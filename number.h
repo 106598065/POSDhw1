@@ -28,6 +28,8 @@ public:
   bool match(Atom atom);
   bool match(Variable& variable);
   bool match(Number *number);
+  bool match(Number& number);
+  bool match(Atom& atom);
 };
 
 #endif

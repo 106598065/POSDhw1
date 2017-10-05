@@ -28,3 +28,15 @@ bool Number::match(Number *number){
   }
   return matched;
 }
+
+bool Number::match(Number& number){
+  bool matched = false;
+  if(_value == number._value){
+    matched = true;
+  }
+  return matched;
+}
+
+bool Number::match(Atom& atom){
+  return false;
+}
