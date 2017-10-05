@@ -36,7 +36,7 @@ bool Number::match(Number& number){
   }
   return matched;
 }
-
+/*
 bool Number::match(Atom& atom){
   return false;
-}
+}*/
