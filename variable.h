@@ -56,6 +56,11 @@ public:
       //variable.varPtr = &_value;
       if(*(variable.varPtr) != ""){
          *varPtr = *(variable.varPtr);
+      }else{
+        *(variable.varPtr) = variable._symbol;
+        *varPtr = *(variable.varPtr);
+        //cout<<"varPtr = "<<*varPtr<<endl;
+        //cout<<"variable.symbol = "<<variable._symbol<<endl;
       }
       variable.varPtr = varPtr;
       //variable.varPtr = varPtr;

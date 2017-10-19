@@ -33,9 +33,9 @@ TEST(Variable , numE_to_varX){
   Variable Y("Y");
   Number N27182(2.7182);
   X.match(N27182);
-  //N27182.match(Y);
+  N27182.match(Y);
   EXPECT_EQ("2.7182",X.value());
-  //EXPECT_EQ("2.7182",Y.value());
+  EXPECT_EQ("2.7182",Y.value());
   //ASSERT_DOUBLE_EQ("2.33456",N27182);
   //ASSERT_FALSE("true");
 }
@@ -174,10 +174,10 @@ TEST(Variable, TEST) {
   Variable Y("Y");
   Number N1(1);
 
-  Y.match(X);
-  N1.match(Y);
+  X.match(Y);
+  //EXPECT_EQ("Y", X.value());
+  X.match(N1);
   //EXPECT_EQ("0", X.value());
-
 }
 
 #endif
