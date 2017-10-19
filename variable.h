@@ -37,7 +37,7 @@ public:
       _value = atom._symbol ;
       *varPtr = atom._symbol;
       _assignable = false;
-    }else if(atom._symbol == _symbol){
+    }else if(atom._symbol == *varPtr){
       ret = true;
     }
     return ret;

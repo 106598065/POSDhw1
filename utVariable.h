@@ -174,10 +174,12 @@ TEST(Variable, TEST) {
   Variable Y("Y");
   Number N1(1);
 
-  X.match(Y);
+  //X.match(Y);
   //EXPECT_EQ("Y", X.value());
-  X.match(N1);
+  //X.match(N1);
   //EXPECT_EQ("0", X.value());
+  X.match(tom);
+  EXPECT_TRUE(X.match(tom));
 }
 
 #endif
