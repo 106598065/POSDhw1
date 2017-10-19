@@ -30,7 +30,7 @@ public:
     }
     if(ret == "W"){
       return "1";
-      cout << "WWWWWWWWWWW"<<endl;
+      //cout << "WWWWWWWWWWW"<<endl;
     }
     return ret;
   }
