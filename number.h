@@ -33,8 +33,11 @@ public:
   }
   bool match (Term & term){
     bool ret = false;
+    string *termvalueAddress;
     if(term._type =="variable"){
-      *term.varPtr = _value;
+      //*term.varPtr = _value;
+      termvalueAddress = term.valueAddress();
+      *termvalueAddress = symbol();
       ret = true;
     }else{
       ret = Term::match(term);

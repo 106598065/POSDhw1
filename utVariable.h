@@ -30,9 +30,12 @@ TEST (Variable , haveValue){
 TEST(Variable , numE_to_varX){
 
   Variable X("X");
+  Variable Y("Y");
   Number N27182(2.7182);
   X.match(N27182);
+  N27182.match(Y);
   EXPECT_EQ("2.7182",X.value());
+  EXPECT_EQ("2.7182",Y.value());
   //ASSERT_DOUBLE_EQ("2.33456",N27182);
   //ASSERT_FALSE("true");
 }
