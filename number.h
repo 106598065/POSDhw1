@@ -32,7 +32,7 @@ public:
     return _value;
   }
   bool match (Term & term){
-    bool ret = false;
+    /*bool ret = false;
     string *termvalueAddress;
     if(term._type =="variable"){
       //*term.varPtr = _value;
@@ -42,7 +42,12 @@ public:
     }else{
       ret = Term::match(term);
     }
-    return ret;
+    return ret;*/
+    bool ret = _assignable;
+    if(_assignable){
+      _value = term.symbol();
+      _assignable = false;
+    }
   }
 
   string _type = "number";
@@ -50,6 +55,7 @@ private:
 
   string _value;
   string _symbol;
+  bool   _assignable = true;
 };
 
 #endif
