@@ -59,9 +59,8 @@ TEST (Variable, varY_to_varX_and_num1_to_varY) {
   Variable Y("Y");
   Number N1(1);
 
-
-  Y.match(N1);
   X.match(Y);
+  Y.match(N1);
 
   EXPECT_EQ("1", X.value());
   EXPECT_EQ("1", Y.value());
@@ -87,8 +86,8 @@ TEST (Variable, num1_to_varY_and_varX_match_varY) {
   Variable Y("Y");
   Number N1(1);
 
-  Y.match(N1);
   X.match(Y);
+  Y.match(N1);
 
   EXPECT_EQ("1", X.value());
 }
@@ -101,10 +100,12 @@ TEST (Variable, num1_to_varZ_to_varY_to_varX) {
   Variable Z("Z");
   Number N1(1);
 
-  Z.match(N1);
-
-  Y.match(Z);
+  //Z.match(N1);
+  //Y.match(Z);
+  //X.match(Y);
   X.match(Y);
+  Y.match(Z);
+  Z.match(N1);
 
   EXPECT_EQ("1", X.value());
   EXPECT_EQ("1", Y.value());
@@ -119,9 +120,12 @@ TEST (Variable, num1_to_varZ_to_varX_and_varY_to_varX) {
   Variable Z("Z");
   Number N1(1);
 
-  Z.match(N1);
+  //Z.match(N1);
+  //X.match(Z);
+  //Y.match(X);
+  X.match(Y);
   X.match(Z);
-  Y.match(X);
+  Z.match(N1);
 
   EXPECT_EQ("1", X.value());
   EXPECT_EQ("1", Y.value());

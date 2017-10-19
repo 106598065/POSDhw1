@@ -3,6 +3,7 @@
 
 #include <string>
 #include "atom.h"
+#include "struct.h"
 using std::string;
 
 class Variable : public Term{
@@ -27,7 +28,7 @@ public:
     bool ret = _assignable;
     if(_assignable){
       _value = atom._symbol ;
-      varPtr = &atom._symbol;
+      *varPtr = atom._symbol;
       _assignable = false;
     }
     return ret;
@@ -37,17 +38,19 @@ public:
     bool ret = _assignable;
     if(_assignable){
       _value = number.value() ;
-      varPtr =(string*) &number._value;
+      *varPtr = number.value();
       _assignable = false;
     }
     return ret;
   }
 
   bool match( Variable & variable ){
-
       //varPtr = &variable._value;
       //variable.varPtr = &_value;
-      varPtr = variable.varPtr;
+      if(*(variable.varPtr) != ""){
+         *varPtr = *(variable.varPtr);
+      }
+      variable.varPtr = varPtr;
       //variable.varPtr = varPtr;
       //cout <<"*varPtr = "<<varPtr<<endl;
       //cout <<"variable._value = "<<&variable._value<<endl;

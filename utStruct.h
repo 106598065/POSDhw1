@@ -153,6 +153,7 @@ TEST(Struct, nested_struct3)
   std::vector<Term *> v2 = {&X};
   Struct s2(Atom("s2"),v2);
   Number pi(3.14);
+
   std::vector<Term *> v = {&s2};
   Struct s1(Atom("s1"),v);
   X.match(pi);
@@ -170,7 +171,7 @@ TEST(Struct, nested_struct_and_multiVariable)
 {
   Variable X("X");
   Variable Y("Y");
-  Number N25(25);
+  //Number N25(25);
   Atom kent_beck("kent_beck");
   std::vector<Term *> v2 = {&Y};
   Struct s2(Atom("s2"),v2);//Struct s2 contains Variable Y
@@ -178,9 +179,9 @@ TEST(Struct, nested_struct_and_multiVariable)
   Struct s1(Atom("s1"),v);//Struct s1 contains Struct s2 and Variable X
   //X.match(Y);//Variable X matches Variable Y 尚未實現
   //Y.match(X);
-  //X.match(Y);
+  X.match(Y);
+  //Y.match(X);
   X.match(kent_beck);// Variable X matches Atom "kent_beck"
-  Y.match(X);
   //Y.match(N25);
   //cout<<"X.value() = " <<X.value() <<endl;;
   //cout<<"Y.value() = " <<Y.value() <<endl;;
