@@ -31,8 +31,20 @@ public:
     //return std::to_string(_value);
     return _value;
   }
+  bool match (Term & term){
+    bool ret = false;
+    if(term._type =="variable"){
+      *term.varPtr = _value;
+      ret = true;
+    }else{
+      ret = Term::match(term);
+    }
+    return ret;
+  }
 
+  string _type = "number";
 private:
+
   string _value;
   string _symbol;
 };

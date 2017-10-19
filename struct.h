@@ -58,7 +58,9 @@ public:
     }
     return false;
   }
+  string _type = "struct";
 private:
+
   Atom _name;
   std::vector<Term *> _args;
 };

@@ -31,8 +31,8 @@ TEST(Variable , numE_to_varX){
 
   Variable X("X");
   Number N27182(2.7182);
-
-  EXPECT_EQ("2.7182",N27182.value());
+  X.match(N27182);
+  EXPECT_EQ("2.7182",X.value());
   //ASSERT_DOUBLE_EQ("2.33456",N27182);
   //ASSERT_FALSE("true");
 }
@@ -163,6 +163,16 @@ TEST (Variable, Struct2) {
   X.match(teddy);
   EXPECT_EQ("Y", Y.symbol());
   EXPECT_EQ("s(teddy)", Y.value());
+}
+/////////////////////////////////
+TEST(Variable, tom_match_varX) {
+  Atom tom("tom");
+  Variable X("X");
+  //cout<<"X._type = "<<X._type<<endl;
+  //X.match(tom);
+  ASSERT_TRUE(tom.match(X));
+  //cout<<"X.value = "<<X.value()<<endl;
+  ASSERT_TRUE(X.match(tom));
 }
 
 #endif

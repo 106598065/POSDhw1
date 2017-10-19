@@ -8,9 +8,16 @@ using std::string;
 
 class Variable : public Term{
 public:
-  Variable (string s):_symbol(s){}
+  string _value;
+  string address = "";
+  string *varPtr = &address;
+
+  Variable (string s):_symbol(s){_type = "variable";}
   string const _symbol;
 
+  string *valueAddress(){
+    return varPtr;
+  }
   string symbol() const { return _symbol; }
   string value() const {
     string ret = *varPtr;// = _value;
@@ -66,11 +73,16 @@ public:
     return true;
   }
 
-  string _value;
-  string address = "";
-  string *varPtr = &address;
+  string type(){
+    return _type;
+  }
+
+
+
+  //string _type = "variable";
 private:
   //string _value;
+
   std::vector<Term *> varVector;
   bool _assignable = true;
   bool _assignableVar = true;
