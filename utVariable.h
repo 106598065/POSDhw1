@@ -172,14 +172,21 @@ TEST(Variable, TEST) {
   Atom tom("tom");
   Variable X("X");
   Variable Y("Y");
+  Variable Z("Z");
+  Variable W("W");
   Number N1(1);
 
   //X.match(Y);
   //EXPECT_EQ("Y", X.value());
   //X.match(N1);
   //EXPECT_EQ("0", X.value());
-  X.match(tom);
-  EXPECT_TRUE(X.match(tom));
+  N1.match(Y);
+  X.match(Y);
+  Z.match(W);
+  EXPECT_EQ("0", W.value());
+  Z.match(Y);
+
+  EXPECT_EQ("0", W.value());
 }
 
 #endif

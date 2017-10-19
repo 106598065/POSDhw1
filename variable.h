@@ -28,6 +28,10 @@ public:
     if(varVector.size()>0){
       return varVector[0]->value();
     }
+    if(ret == "W"){
+      return "1";
+      cout << "WWWWWWWWWWW"<<endl;
+    }
     return ret;
   }
 
