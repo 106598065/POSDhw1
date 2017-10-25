@@ -1,7 +1,6 @@
 #ifndef UTATOM_H
 #define UTATOM_H
 #include "atom.h"
-//#include "variable.h"
 
 TEST(Atom, first) {
   ASSERT_TRUE(true);
@@ -30,6 +29,5 @@ TEST(Atom, Virtual)
   Term* t = new Atom("tom");
   EXPECT_EQ("tom", t->value());
 }
-
 
 #endif

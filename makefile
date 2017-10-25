@@ -1,23 +1,21 @@
-all: hw3
+all: hw4
 
-hw3: mainAtom.o
+hw4: mainList.o term.o atom.o
 ifeq (${OS}, Windows_NT)
-	g++ -o hw3 mainAtom.o -lgtest
+	g++ -o hw4 mainList.o term.o atom.o -lgtest
 else
-	g++ -o hw3 mainAtom.o -lgtest -lpthread
+	g++ -o hw4 mainList.o term.o atom.o -lgtest -lpthread
 endif
 
-mainAtom.o: mainAtom.cpp utVariable.h number.h utStruct.h 
-	g++ -std=gnu++11 -c mainAtom.cpp
-number.o: number.h number.cpp
-	g++ -std=gnu++11 -c number.cpp
-atom.o: atom.h atom.cpp
-	g++ -std=gnu++11 -c atom.cpp
-variable.o: variable.h variable.cpp
-	g++ -std=gnu++11 -c variable.cpp
+mainList.o: mainList.cpp utList.h
+	g++ -std=c++11 -c mainList.cpp
+term.o: term.cpp term.h variable.h
+	g++ -std=c++11 -c term.cpp
+atom.o: atom.cpp atom.h term.h number.h
+	g++ -std=c++11 -c atom.cpp
 
 
 clean:
-	rm -f *.o mainAtom *hw3
+	rm -f *.o mainList *hw4
 stat:
 	wc *.h *.cpp
