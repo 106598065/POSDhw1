@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <stdexcept>
 //using std::vector;
 //using std::string;
 using namespace std;
@@ -90,13 +91,18 @@ public:
   List (vector<Term *>  & elements):_elements(elements){_assignable = false;}
   Term * head() const{
     string ret = "Accessing head in an empty list";
-    //if(_assignable){
-    //  cout <<"Accessing head in an empty list as an exception"<<endl;
-    //}
+    if(_elements.size()==0)
+    {
+      throw std::string("Accessing head in an empty list");
+    }
     return _elements[0];
   }
 
   List * tail() {
+    if(_elements.size()==0)
+    {
+      throw std::string("Accessing tail in an empty list");
+    }
     List *l = new List();
     l->_elements = _elements;
     if(l->_elements.size() > 0){
