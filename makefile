@@ -8,11 +8,11 @@ else
 endif
 
 mainList.o: mainList.cpp utList.h
-	g++ -std=c++11 -c mainList.cpp
+	g++ -std=gnu++11 -c mainList.cpp
 term.o: term.cpp term.h variable.h
-	g++ -std=c++11 -c term.cpp
+	g++ -std=gnu++11 -c term.cpp
 atom.o: atom.cpp atom.h term.h number.h
-	g++ -std=c++11 -c atom.cpp
+	g++ -std=gnu++11 -c atom.cpp
 
 
 clean:
