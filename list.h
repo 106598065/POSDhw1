@@ -41,7 +41,7 @@ public:
     return ret;
   }
 
-  bool match(Term & term){
+/*  bool match(Term & term){
     bool ret = false;
     int i = 0;
 
@@ -53,8 +53,8 @@ public:
     }
     return ret;
   };
-
-  bool match(List & list){
+*/
+/*  bool match(List & list){
     int i = 0;
     bool ret = true;
     if(_elements.size() == list.elementSize()){
@@ -70,7 +70,7 @@ public:
       ret = false;
     }
     return ret;
-  }
+  }*/
 
   Term * returnElement(int i){
     return _elements[i];
@@ -78,6 +78,11 @@ public:
 
   int elementSize(){
     return _elements.size();
+  }
+
+  vector<Term *> getElement()
+  {
+    return _elements;
   }
 
   List (): _elements(){}

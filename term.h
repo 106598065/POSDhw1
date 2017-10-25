@@ -4,11 +4,12 @@
 #include <string>
 #include <sstream>
 #include <typeinfo>
-//#include "atom.h"
-//#include "variable.h"
+#include <vector>
 class Variable;
+class List;
 
 using std::string;
+
 
 class Term{
 public:
@@ -20,6 +21,10 @@ public:
     else*/
       //return symbol() == a.symbol();
   //}
+  virtual std::vector<Term *> getElement(){
+    std::vector<Term *> v;
+    return v;
+  }
 protected:
   Term ();
   Term (string s);

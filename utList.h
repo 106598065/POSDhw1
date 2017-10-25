@@ -105,7 +105,8 @@ TEST(List, matchToVarShouldSucceed) {
   std::vector<Term *> elements = {&N496, &X, &terence_tao};
   List L(elements);
   Variable Y("Y");
-  EXPECT_TRUE(Y.match(L));
+  //EXPECT_TRUE(Y.match(L));
+  EXPECT_TRUE(L.match(Y));
   EXPECT_EQ("Y = [496, X, terence_tao]",Y.symbol());
 }
 
