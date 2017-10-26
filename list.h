@@ -83,7 +83,7 @@ public:
   }
 
   List * tail() {
-    string ret = "Accessing head in an empty list";
+    string ret = "Accessing tail in an empty list";
     if(_elements.empty()){
       throw ret;
     }
