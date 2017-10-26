@@ -8,8 +8,6 @@
 using std::string;
 using std::type_info;
 
-//std::vector<Term *> Term::getElement()
-
 bool Term::match(Term & a){
   int i = 0;
   bool ret = true;

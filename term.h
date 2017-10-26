@@ -15,12 +15,7 @@ class Term{
 public:
   virtual string symbol() const{return _symbol;}
   virtual string value() const{return symbol();}
-  virtual bool match(Term & a);//{
-    /*if (typeid(a) ==  typeid(Variable))
-      return a.match(*this);
-    else*/
-      //return symbol() == a.symbol();
-  //}
+  virtual bool match(Term & a);
   virtual std::vector<Term *> getElement(){
     std::vector<Term *> v;
     return v;

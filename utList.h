@@ -232,14 +232,16 @@ TEST(List, headAndTailMatching4) {
 TEST (List, emptyExecptionOfHead) {
   List L1;
   //L1.head()->value();
-
+  //EXPECT_EQ(string("Accessing head in an empty list"), L1.head()->value());
+  EXPECT_THROW(L1.head()->value(), std::string);
 }
 
 // Given there is a empty list
 // When client still want to get the head of list
 // Then it should throw a string: "Accessing tail in an empty list" as an exception.
 TEST (List, emptyExecptionOfTail) {
-
+  List L1;
+  EXPECT_THROW(L1.tail()->value(), std::string);
 }
 
 
