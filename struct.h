@@ -24,10 +24,17 @@ public:
   }
   string symbol() const {
     string ret = _name.symbol() + "(";
-    std::vector<Term *>::const_iterator it = _args.begin();
-    for (; it != _args.end()-1; ++it)
-      ret += (*it)->symbol()+", ";
-    ret  += (*it)->symbol()+")";
+
+    if(!_args.empty()){
+      std::vector<Term *>::const_iterator it = _args.begin();
+      for (; it != _args.end()-1; ++it){
+        ret += (*it)->symbol()+", ";
+      }
+      ret  += (*it)->symbol()+")";
+    }else{
+      ret+=")";
+    }
+
     return ret;
   }
   string value() const {
