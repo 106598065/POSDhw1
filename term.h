@@ -20,6 +20,7 @@ public:
     std::vector<Term *> v;
     return v;
   }
+  virtual int arity();
 protected:
   Term ();
   Term (string s);

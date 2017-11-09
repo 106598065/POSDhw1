@@ -8,6 +8,10 @@
 using std::string;
 using std::type_info;
 
+int Term::arity(){
+  return 0;
+}
+
 bool Term::match(Term & a){
   int i = 0;
   bool ret = true;

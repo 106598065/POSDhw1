@@ -40,24 +40,6 @@ public:
     return ret;
   }
 
-/*  bool match(List & list){
-    int i = 0;
-    bool ret = true;
-    if(_elements.size() == list.elementSize()){
-      for(i = 0; i < _elements.size(); ++i){
-        if(! _elements[i]->match( *(list).returnElement(i) )){
-          //cout<<"_elements[i].value() = "<<_elements[i]->value()<<endl;
-          //cout<<"List.returnElement = "<<list.returnElement(i)->value()<<endl;
-          //cout<<"match success"<<endl;
-          ret = false;
-        }
-      }
-    }else{
-      ret = false;
-    }
-    return ret;
-  }*/
-
   Term * returnElement(int i){
     return _elements[i];
   }

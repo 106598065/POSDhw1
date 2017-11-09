@@ -1,21 +1,24 @@
-all: hw4
+all: hw5
 
-hw4: mainList.o term.o atom.o
+hw5: term.o atom.o mainScanner.o
 ifeq (${OS}, Windows_NT)
-	g++ -o hw4 mainList.o term.o atom.o -lgtest
+	g++ -o hw5 term.o atom.o mainScanner.o -lgtest
 else
-	g++ -o hw4 mainList.o term.o atom.o -lgtest -lpthread
+	g++ -o hw5 term.o atom.o mainScanner.o -lgtest -lpthread
 endif
 
 mainList.o: mainList.cpp utList.h
-	g++ -std=gnu++11 -c mainList.cpp
-term.o: term.cpp term.h variable.h
-	g++ -std=gnu++11 -c term.cpp
+		g++ -std=gnu++11 -c mainList.cpp
+mainScanner.o: mainScanner.cpp utScanner.h scanner.h utParser.h parser.h
+		g++ -std=gnu++11 -c mainScanner.cpp
+term.o: term.cpp term.h variable.h list.h
+		g++ -std=gnu++11 -c term.cpp
 atom.o: atom.cpp atom.h term.h number.h
-	g++ -std=gnu++11 -c atom.cpp
+		g++ -std=gnu++11 -c atom.cpp
+
 
 
 clean:
-	rm -f *.o mainList *hw4
+		rm -f *.o mainList *hw5
 stat:
-	wc *.h *.cpp
+		wc *.h *.cpp

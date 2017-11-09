@@ -233,7 +233,12 @@ TEST (List, emptyExecptionOfHead) {
   List L1;
   //L1.head()->value();
   //EXPECT_EQ(string("Accessing head in an empty list"), L1.head()->value());
-  EXPECT_THROW(L1.head()->value(), std::string);
+  try{
+    L1.head()->value();
+  }catch(string e){
+    EXPECT_EQ(string("Accessing head in an empty list"), e);
+  }
+  //EXPECT_THROW(L1.head()->value(), std::string);//只有檢查有沒有丟出Exception
 }
 
 // Given there is a empty list
@@ -241,7 +246,12 @@ TEST (List, emptyExecptionOfHead) {
 // Then it should throw a string: "Accessing tail in an empty list" as an exception.
 TEST (List, emptyExecptionOfTail) {
   List L1;
-  EXPECT_THROW(L1.tail()->value(), std::string);
+  try{
+    L1.tail()->value();
+  }catch(string e){
+    EXPECT_EQ(string("Accessing tail in an empty list"), e);
+  }
+  //EXPECT_THROW(L1.tail()->value(), std::string);
 }
 
 
