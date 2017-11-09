@@ -11,6 +11,9 @@ using std::type_info;
 int Term::arity(){
   return 0;
 }
+Term * Term::args(int index){
+  return nullptr;
+}
 
 bool Term::match(Term & a){
   int i = 0;

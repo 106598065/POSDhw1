@@ -224,8 +224,10 @@ TEST_F(ParserTest, ListAsStruct2) {
   Scanner scanner(".(2,.(1,[]))");
   Parser parser(scanner);
   Term *terms = parser.createTerm();
-  //EXPECT_EQ(23, terms->arity());
-
+  EXPECT_EQ(2, terms->arity());
+  EXPECT_EQ(".(2, .(1, []))", terms->symbol());
+  EXPECT_EQ("2", terms->args(0)->symbol());
+  EXPECT_EQ(".(1, [])", terms->args(1)->symbol());
 }
 
 
@@ -235,7 +237,12 @@ TEST_F(ParserTest, ListAsStruct2) {
 // And #symbol() of the first Strcut should return "s(s(s(s(1))))".
 // And #symbol() of the second Strcut should return "b(1, 2, 3)".
 TEST_F(ParserTest, parseStructOfStructAllTheWay2) {
+  Scanner scanner("s(s(s(s(1)))), b(1,2,3)");
+  Parser parser(scanner);
+  vector<Term *> terms = parser.getArgs();
 
+  EXPECT_EQ("s(s(s(s(1))))", terms[0]->symbol());
+  EXPECT_EQ("b(1, 2, 3)", terms[1]->symbol());
 }
 
 
@@ -244,7 +251,10 @@ TEST_F(ParserTest, parseStructOfStructAllTheWay2) {
 // Then it should return a Struct.
 // And #symbol() of Strcut should return "point()".
 TEST_F(ParserTest, parseStructNoArg) {
+  Scanner scanner("point()");
+  Parser parser(scanner);
 
+  //EXPECT_EQ("point()1", parser.createTerm()->symbol());
 }
 
 

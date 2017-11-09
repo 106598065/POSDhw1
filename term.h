@@ -21,6 +21,8 @@ public:
     return v;
   }
   virtual int arity();
+  virtual Term * args(int index);
+
 protected:
   Term ();
   Term (string s);
