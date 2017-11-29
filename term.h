@@ -5,6 +5,8 @@
 #include <sstream>
 #include <typeinfo>
 #include <vector>
+#include <iostream>
+using namespace std;
 class Variable;
 class List;
 

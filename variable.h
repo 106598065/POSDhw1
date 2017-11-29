@@ -11,10 +11,16 @@ class Variable : public Term {
 public:
   Variable(string s):Term(s), _inst(0){}
   string value() const {
-    if (_inst)
+    if (_inst){
+      //cout<<"HH = "<<(*_inst).value()<<endl;
+      //cout<<" u call varialbe value "<<endl;
       return _inst->value();
-    else
+    }
+    else{
+      //cout<<" hello 2"<<endl;
       return Term::value();
+    }
+
   }
   bool match( Term & term ){
     if (this == &term)
@@ -26,7 +32,7 @@ public:
     }
     return _inst->match(term);
   }
-  string symbol() const{
+  /*string symbol() const{
     string ret = _symbol;
             //cout<<"HELLO"<<endl;
       if(_inst){
@@ -34,7 +40,17 @@ public:
         ret += (*_inst).symbol();
       }
     return ret;
-  }
+  }*/
+  /*string value() const{
+    string ret = (*_inst).value();
+            cout<<"HELL1O = "<<(*_inst).value()<<endl;
+      /*if(_inst){
+        ret += " = ";
+        ret += (*_inst).value();
+          cout<<"HELL2O"<<endl;
+      }
+    return ret;
+  }*/
 private:
   Term * _inst;
 };
