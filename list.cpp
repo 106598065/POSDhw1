@@ -76,10 +76,10 @@ Iterator<Term *> *List::createIterator(){
     return new ListIterator<Term*>(this);
 };
 
-Iterator<Term *> *List::createDFSiterator(){
+Iterator<Term *> *List::createDFSIterator(){
     return new DFSiterator<Term*>(this);
 };
 
-Iterator<Term *> *List::createBFSiterator(){
+Iterator<Term *> *List::createBFSIterator(){
     return new BFSiterator<Term*>(this);
 };

@@ -13,8 +13,8 @@ template <class T> class Iterator;
 class List : public Term {
 public:
   Iterator<Term *> *createIterator();
-  Iterator<Term *> *createDFSiterator();
-  Iterator<Term *> *createBFSiterator();
+  Iterator<Term *> *createDFSIterator();
+  Iterator<Term *> *createBFSIterator();
   bool match(Term & term);
   string symbol() const;
   string value() const;

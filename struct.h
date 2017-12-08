@@ -52,8 +52,8 @@ public:
   }
 
   Iterator<Term *> *createIterator();
-  Iterator<Term *> *createDFSiterator();
-  Iterator<Term *> *createBFSiterator();
+  Iterator<Term *> *createDFSIterator();
+  Iterator<Term *> *createBFSIterator();
 
 private:
   Atom _name;
