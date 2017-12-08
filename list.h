@@ -8,43 +8,22 @@
 #include <stdexcept>
 using namespace std;
 
+template <class T> class Iterator;
+
 class List : public Term {
 public:
-  string symbol() const{
-    string ret = _symbol;
-    if(_elements.empty()){
-      ret = "[]";
-    }else{
-      std::vector<Term *>::const_iterator it = _elements.begin();
-      ret ="[";
-      for(; it!=_elements.end()-1; ++it){
-        ret += (*it)->symbol()+", ";
-      }
-      ret += (*it)->symbol()+"]";
-    }
-    return ret;
-  }
+  Iterator<Term *> *createIterator();
+  Iterator<Term *> *createDFSiterator();
+  Iterator<Term *> *createBFSiterator();
+  bool match(Term & term);
+  string symbol() const;
+  string value() const;
 
-  string value() const{//return symbol();
-    string ret = _symbol;
-    if(_elements.empty()){
-      ret = "[]";
-    }else{
-      std::vector<Term *>::const_iterator it = _elements.begin();
-      ret ="[";
-      for(; it!=_elements.end()-1; ++it){
-        ret += (*it)->value()+", ";
-      }
-      ret += (*it)->value()+"]";
-    }
-    return ret;
-  }
-
-  Term * returnElement(int i){
+  Term * args(int i){
     return _elements[i];
   }
 
-  int elementSize(){
+  int arity(){
     return _elements.size();
   }
 
@@ -55,26 +34,25 @@ public:
 
   List (): _elements(){}
 
-  List (vector<Term *>  & elements):_elements(elements){_assignable = false;}
-  Term * head() const{
-    string ret = "Accessing head in an empty list";
-    if(_elements.empty()){
-      throw ret;
-    }
-    return _elements[0];
+  List (vector<Term *> const & elements):_elements(elements){
+    _assignable = false;
   }
 
-  List * tail() {
-    string ret = "Accessing tail in an empty list";
-    if(_elements.empty()){
-      throw ret;
-    }
-    List *lptr = new List();
-    lptr->_elements = _elements;
-    if(lptr->_elements.size() > 0){
-      lptr->_elements.erase(lptr->_elements.begin());
-    }
-    return lptr;
+  Term * head() const{
+      if(_elements.empty())
+          throw std::string("Accessing head in an empty list");
+
+      return _elements[0];
+  }
+
+
+  List * tail() const {
+      if(_elements.empty())
+          throw std::string("Accessing tail in an empty list");
+      vector<Term *> _clone_elements;
+      _clone_elements.assign(_elements.begin()+1, _elements.end());
+      List *ls= new List(_clone_elements) ;
+      return ls;
   }
 
 private:

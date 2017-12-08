@@ -7,8 +7,10 @@
 #include <vector>
 #include <iostream>
 using namespace std;
+
 class Variable;
 class List;
+template <class T> class Iterator;
 
 using std::string;
 
@@ -24,6 +26,7 @@ public:
   }
   virtual int arity();
   virtual Term * args(int index);
+  virtual Iterator<Term *> * createIterator();
 
 protected:
   Term ();

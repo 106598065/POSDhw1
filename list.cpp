@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include "list.h"
+#include "iterator.h"
 using std::vector;
 
 string List::symbol() const{
@@ -71,17 +72,14 @@ bool List::match(Term & term) {
         return value () == term.value();
     }
 }
-Term * List::head() const{
-    if(_elements.empty())
-        throw std::string("Accessing head in an empty list");
+Iterator<Term *> *List::createIterator(){
+    return new ListIterator<Term*>(this);
+};
 
-    return _elements[0];
-}
-List * List::tail() const {
-    if(_elements.empty())
-        throw std::string("Accessing tail in an empty list");
-    vector<Term *> _clone_elements;
-    _clone_elements.assign(_elements.begin()+1, _elements.end());
-    List *ls= new List(_clone_elements) ;
-    return ls;
-}
+Iterator<Term *> *List::createDFSiterator(){
+    return new DFSiterator<Term*>(this);
+};
+
+Iterator<Term *> *List::createBFSiterator(){
+    return new BFSiterator<Term*>(this);
+};

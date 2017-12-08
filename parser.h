@@ -90,13 +90,15 @@ public:
           Node * root = new Node(EQUALITY, nullptr, left, right);
           _tree = root;
 
-        //  Struct * s = dynamic_cast<Struct *>(_terms.back());
-          /*if(s){
+          Struct * s = dynamic_cast<Struct *>(_terms.back());
+          if(s){
             cout<<"sssssssss"<<endl;
             Term * findTerm2 = termItr(_terms.back());//find left tree term X
             //cout<<"term.s = "<<term->symbol()<<endl;
             if(findTerm2 != nullptr) term->match(*findTerm2);
-          }*/
+            cout<<"findTerm2value"<<findTerm2->value()<<endl;
+            cout<<"termvalue"<<term->value()<<endl;
+          }
 
         }else if( _currentToken == ','){
           isComma = true;
