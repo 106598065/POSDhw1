@@ -176,6 +176,9 @@ public:
         if(n->arity() != 0){
           for(int i = 0; i < n->arity(); i++){
             //q.push(n.args(i));
+            if(n->args(i)->arity() != 0){
+              q.push(n->args(i));
+            }
             _terms.push_back(n->args(i));
           }
         }

@@ -194,5 +194,122 @@ TEST(iterator, ListBFSiterator){
   EXPECT_TRUE(itList->isDone());
 }
 
+TEST(iterator, ComboLSDFSiterator){
+  Number one(1);
+  Variable X("X");
+  Variable Y("Y");
+  Number two(2);
+  Struct t(Atom("t"), { &X, &two });
+  Struct s(Atom("s"), { &one, &t, &Y });
+  List l({&s});
+
+  Iterator<Term *> *itStruct = s.createDFSIterator();
+  Iterator<Term *> *itList = l.createDFSIterator();
+  itList->first();
+
+  //EXPECT_FALSE(itStruct->isDone());
+  EXPECT_FALSE(itList->isDone());
+  EXPECT_EQ("s(1, t(X, 2), Y)", itList->currentItem()->symbol());
+  itList->next();
+  EXPECT_EQ("1", itList->currentItem()->symbol());
+  itList->next();
+  EXPECT_EQ("t(X, 2)", itList->currentItem()->symbol());
+  itList->next();
+  EXPECT_EQ("X", itList->currentItem()->symbol());
+  itList->next();
+  EXPECT_EQ("2", itList->currentItem()->symbol());
+  itList->next();
+  EXPECT_EQ("Y", itList->currentItem()->symbol());
+  EXPECT_TRUE(itList->isDone());
+}
+
+TEST(iterator, ComboSLDFSiterator){
+  Number one(1);
+  Variable X("X");
+  Variable Y("Y");
+  Number two(2);
+  Struct t(Atom("t"), { &X, &two });
+  List l({ &one, &t, &Y });
+  Struct s(Atom("s"), {&l});
+
+  Iterator<Term *> *itList = l.createDFSIterator();
+  Iterator<Term *> *itStruct = s.createDFSIterator();
+  //EXPECT_FALSE(itList->isDone());
+  itStruct->first();
+  EXPECT_EQ("[1, t(X, 2), Y]", itStruct->currentItem()->symbol());
+  itStruct->next();
+  EXPECT_EQ("1", itStruct->currentItem()->symbol());
+  itStruct->next();
+  EXPECT_EQ("t(X, 2)", itStruct->currentItem()->symbol());
+  itStruct->next();
+  EXPECT_EQ("X", itStruct->currentItem()->symbol());
+  itStruct->next();
+  EXPECT_EQ("2", itStruct->currentItem()->symbol());
+  itStruct->next();
+  EXPECT_EQ("Y", itStruct->currentItem()->symbol());
+  EXPECT_TRUE(itStruct->isDone());
+}
+
+TEST(iterator, ComboSLBFSiterator){
+  Number one(1);
+  Variable X("X");
+  Variable Y("Y");
+  Number two(2);
+  Struct t(Atom("t"), { &X, &two });
+  List l({ &one, &t, &Y });
+  Struct x(Atom("x"), {&l});
+
+
+  Iterator<Term *> *itList = l.createBFSIterator();
+  Iterator<Term *> *itStruct = x.createBFSIterator();
+  //EXPECT_FALSE(itList->isDone());
+  itStruct->first();
+  EXPECT_EQ("[1, t(X, 2), Y]", itStruct->currentItem()->symbol());
+  itStruct->next();
+  EXPECT_EQ("1", itStruct->currentItem()->symbol());
+  itStruct->next();
+  EXPECT_EQ("t(X, 2)", itStruct->currentItem()->symbol());
+  itStruct->next();
+  EXPECT_EQ("Y", itStruct->currentItem()->symbol());
+  itStruct->next();
+  EXPECT_EQ("X", itStruct->currentItem()->symbol());
+  itStruct->next();
+  EXPECT_EQ("2", itStruct->currentItem()->symbol());
+  //itStruct->next();
+  EXPECT_TRUE(itStruct->isDone());
+}
+
+TEST(iterator, ComboLSBFSiterator){
+  Number one(1);
+  Variable X("X");
+  Variable Y("Y");
+  Number two(2);
+  Struct t(Atom("t"), { &X, &two });
+  Struct s(Atom("s"), { &one, &t, &Y });
+  List l({&s});
+
+  Iterator<Term *> *itStruct = s.createBFSIterator();
+  Iterator<Term *> *itList = l.createBFSIterator();
+  itList->first();
+
+  EXPECT_FALSE(itList->isDone());
+  EXPECT_EQ("s(1, t(X, 2), Y)", itList->currentItem()->symbol());
+  itList->next();
+  EXPECT_EQ("1", itList->currentItem()->symbol());
+  itList->next();
+  EXPECT_EQ("t(X, 2)", itList->currentItem()->symbol());
+  itList->next();
+  EXPECT_EQ("Y", itList->currentItem()->symbol());
+  itList->next();
+  EXPECT_EQ("X", itList->currentItem()->symbol());
+  itList->next();
+  EXPECT_EQ("2", itList->currentItem()->symbol());
+  //itList->next();
+  //EXPECT_EQ("", itList->currentItem()->symbol());
+
+  EXPECT_TRUE(itList->isDone());
+}
+
+
 
 #endif

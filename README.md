@@ -1,4 +1,4 @@
-# POSD2017F Homework TT
+# POSD2017F Homework
 
 ## Homework assignment 6
 
