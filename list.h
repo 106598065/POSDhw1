@@ -1,63 +1,49 @@
 #ifndef LIST_H
 #define LIST_H
 
-#include "term.h"
-#include <string>
+#include "struct.h"
 #include <vector>
+#include <typeinfo>
 #include <iostream>
-#include <stdexcept>
-using namespace std;
+using std::vector;
+class Variable ;
 
-template <class T> class Iterator;
-
-class List : public Term {
+class List : public Struct {
 public:
-  Iterator<Term *> *createIterator();
-  Iterator<Term *> *createDFSIterator();
-  Iterator<Term *> *createBFSIterator();
-  bool match(Term & term);
-  string symbol() const;
-  string value() const;
+  string symbol() const ;
+  string value() const ;
 
-  Term * args(int i){
-    return _elements[i];
+public:
+
+  List (vector<Term *> const & elements): Struct(Atom("."), {elements[0], createTail(elements)}){
   }
 
-  int arity(){
+  List(Term * head, Term* tail):Struct(Atom("."), { head, tail }) {
+
+  }
+
+  Term * head() const;
+  Term * tail() const;
+
+  Term * args(int index) {
+    return _elements[index];
+  }
+
+  int arity() const {
     return _elements.size();
   }
 
-  vector<Term *> getElement()
-  {
-    return _elements;
-  }
-
-  List (): _elements(){}
-
-  List (vector<Term *> const & elements):_elements(elements){
-    _assignable = false;
-  }
-
-  Term * head() const{
-      if(_elements.empty())
-          throw std::string("Accessing head in an empty list");
-
-      return _elements[0];
-  }
-
-
-  List * tail() const {
-      if(_elements.empty())
-          throw std::string("Accessing tail in an empty list");
-      vector<Term *> _clone_elements;
-      _clone_elements.assign(_elements.begin()+1, _elements.end());
-      List *ls= new List(_clone_elements) ;
-      return ls;
-  }
-
+  Iterator * createIterator();
 private:
-  bool _assignable = true;
   vector<Term *> _elements;
+  
+  Term* createTail(std::vector<Term*> const &args){
+    Term* tail = new Atom("[]");
+    for (int i = args.size() - 1; i > 0; i--) {
+      tail = new List(args[i], tail);
+    }
+    return tail;
+  }
 };
 
 #endif

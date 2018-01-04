@@ -1,6 +1,7 @@
 #ifndef PARSER_H
 #define PARSER_H
 #include <string>
+#include <map>
 using std::string;
 
 #include "atom.h"
@@ -9,124 +10,30 @@ using std::string;
 #include "scanner.h"
 #include "struct.h"
 #include "list.h"
-#include "node.h"
-#include <typeinfo>
-using std::string;
-using std::type_info;
+#include "exp.h"
+#include <stack>
 
-#include "utParser.h"
+using std::stack;
+using namespace std;
 
 class Parser{
 public:
-  Parser(Scanner scanner) : _scanner(scanner), _terms(){}
-
-  Term* termItr( Term * term){
-    //cout<<"(term->symbol() = "<<term->symbol()<<endl;
-    for(int index = 0; index < _terms.size(); index++){
-      //cout<<"_terms[index].symbol() = "<<_terms[index]->symbol()<<endl;
-      //cout<<"index = "<<index<<endl;
-
-      if(term->symbol() == _terms[index]->symbol()){
-        return _terms[index];
-      }
-      //cout<<"_terms[index].symbol() = "<<_terms[index]->symbol()<<endl;
-      Struct * s = dynamic_cast<Struct *>(_terms[index]);
-
-      if(s){
-        //cout<<"hello"<<endl;
-        return structItr(term,s);
-      }else{
-        //cout <<"s = "<< s <<endl;
-      }
-    }
-    return nullptr;
-  }
-
-  Term* structItr(Term * term, Struct * s){
-    for(int i = 0; i < s->arity(); i++){
-       if(s->args(i)->symbol() == term->symbol()){
-         //cout<<" ss->args(i)->symbol = "<<i<<" "<<s->args(i)->symbol()<<endl;
-         return s->args(i);
-       }
-       Struct * ss = dynamic_cast<Struct*>(s->args(i));
-
-       if(ss) {
-        return structItr(term,ss);
-      }
-    }
-  }
-
-  void matchings(){
-    Term* term = createTerm();
-    if(term!=nullptr)
-    {
-      if(isComma == true){
-        Term * findTerm = termItr(term);//find left tree term X
-        //cout<<"term.s = "<<term->symbol()<<endl;
-        if(findTerm != nullptr) term->match(*findTerm);//use right X match left X
-        //Struct * s = dynamic_cast<Struct *>(_terms[index]);
-
-
-        //cout<<"_terms.back() = "<<_terms.back()->symbol()<<endl;
-        _terms.push_back(term);
-        //cout<<"_terms.back() = "<<_terms.back()->symbol()<<endl;
-        //cout<<"term.symbol() = "<< term.symbol()<<endl;
-
-        //Term * findTerm2 = termItr(term);//find left tree term X
-        //if(findTerm2 != nullptr) term->match(*findTerm2);
-
-      }else{
-        _terms.push_back(term);
-      }
-      while((_currentToken = _scanner.nextToken()) == ',' || _currentToken == '=' || _currentToken == ';') {
-        if(_currentToken == '='){
-          //isComma = false;
-          Node * left = new Node(TERM, _terms.back(), nullptr, nullptr);
-          _terms.push_back(createTerm());
-          //cout<<"_terms.back() = "<<_terms.back()->symbol()<<endl;
-          Node * right = new Node(TERM, _terms.back(), nullptr, nullptr);
-          //cout<<"_terms.back() = "<<_terms.back()->symbol()<<endl;
-          //cout<<"terms.symbol() = "<<term->symbol()<<endl;
-          Node * root = new Node(EQUALITY, nullptr, left, right);
-          _tree = root;
-
-          Struct * s = dynamic_cast<Struct *>(_terms.back());
-          if(s){
-            cout<<"sssssssss"<<endl;
-            Term * findTerm2 = termItr(_terms.back());//find left tree term X
-            //cout<<"term.s = "<<term->symbol()<<endl;
-            if(findTerm2 != nullptr) term->match(*findTerm2);
-            cout<<"findTerm2value"<<findTerm2->value()<<endl;
-            cout<<"termvalue"<<term->value()<<endl;
-          }
-
-        }else if( _currentToken == ','){
-          isComma = true;
-          //tree left = _tree
-          //tree root = comma
-          //tree right =
-          Node * left = _tree;
-          //_terms.push_back(createTerm());
-          matchings();
-          Node * root = new Node(COMMA, nullptr, left, _tree);
-          _tree = root;
-          //cout<<"HHH"<<endl;
-        }else if( _currentToken == ';' ){
-          isComma = false;
-          Node * left = _tree;
-          matchings();
-          Node * root = new Node(SEMICOLON, nullptr, left, _tree);
-          _tree = root;
-        }
-      }
-    }
-  }
+  Parser(Scanner scanner) : _scanner(scanner), _terms() {}
 
   Term* createTerm(){
     int token = _scanner.nextToken();
     _currentToken = token;
     if(token == VAR){
-      return new Variable(symtable[_scanner.tokenValue()].first);
+      l_it = _mapv.find(symtable[_scanner.tokenValue()].first);
+      if(l_it==_mapv.end()){
+        Variable * v =new Variable(symtable[_scanner.tokenValue()].first);
+        _mapv.insert(std::pair<string,Variable*>(symtable[_scanner.tokenValue()].first,v));
+        return v;
+      }
+      else
+        return l_it->second;
+
+
     }else if(token == NUMBER){
       return new Number(_scanner.tokenValue());
     }else if(token == ATOM || token == ATOMSC){
@@ -140,7 +47,6 @@ public:
     else if(token == '['){
       return list();
     }
-
     return nullptr;
   }
 
@@ -157,7 +63,7 @@ public:
       _terms.erase(_terms.begin() + startIndexOfStructArgs, _terms.end());
       return new Struct(structName, args);
     } else {
-      throw string("unexpected token");
+      throw string("Unbalanced operator");
     }
   }
 
@@ -168,9 +74,12 @@ public:
     {
       vector<Term *> args(_terms.begin() + startIndexOfListArgs, _terms.end());
       _terms.erase(_terms.begin() + startIndexOfListArgs, _terms.end());
+      if(args.size()==0){
+        return new Atom("[]");
+      }
       return new List(args);
     } else {
-      throw string("unexpected token");
+      throw string("Unbalanced operator");
     }
   }
 
@@ -178,17 +87,83 @@ public:
     return _terms;
   }
 
-  Node * expressionTree(){
-    return _tree;
+  void buildExpression(){
+    // createTerm();
+    disjunctionMatch();
+    restDisjunctionMatch();
+    if (createTerm() != nullptr || _currentToken != '.')
+      throw string("Missing token '.'");
   }
 
+  void restDisjunctionMatch() {
+    if (_scanner.currentChar() == ';') {
+      createTerm();
+      if(_scanner.currentChar() == '.')
+       throw string("Unexpected ';' before '.'");
+      disjunctionMatch();
+      Exp *right = _expStack.top();
+      _expStack.pop();
+      Exp *left = _expStack.top();
+      _expStack.pop();
+      _expStack.push(new DisjExp(left, right));
+      restDisjunctionMatch();
+    }
 
+  }
+
+  void disjunctionMatch() {
+    conjunctionMatch();
+    restConjunctionMatch();
+  }
+
+  void restConjunctionMatch() {
+    if (_scanner.currentChar() == ',') {
+      createTerm();
+      if(_scanner.currentChar() == '.')
+       throw string("Unexpected ',' before '.'");
+      conjunctionMatch();
+      Exp *right = _expStack.top();
+      _expStack.pop();
+      Exp *left = _expStack.top();
+      _expStack.pop();
+      _expStack.push(new ConjExp(left, right));
+      restConjunctionMatch();
+    }
+  }
+
+  void conjunctionMatch() {
+    Term * left = createTerm();
+    if (createTerm() == nullptr && _currentToken == '=') {
+      Term * right = createTerm();
+      _expStack.push(new MatchExp(left, right));
+    }
+    else if(_currentToken == ';' && _scanner.currentChar()== '.'){
+      throw string("Unexpected ';' before '.'");
+    }
+    else if(_currentToken == ',' && _scanner.currentChar()== '.'){
+      throw string("Unexpected ',' before '.'");
+    }
+    else if(_currentToken == '.'){
+      string msg = left->symbol() + " does never get assignment" ;
+      throw string(msg);
+    }
+
+  }
+
+  Exp* getExpressionTree(){
+    return _expStack.top();
+  }
+
+  string getExpressionResult(){
+    return _expStack.top()->getExpressionResult() + ".";
+  }
 
 private:
   FRIEND_TEST(ParserTest, createArgs);
   FRIEND_TEST(ParserTest,ListOfTermsEmpty);
   FRIEND_TEST(ParserTest,listofTermsTwoNumber);
   FRIEND_TEST(ParserTest, createTerm_nestedStruct3);
+  FRIEND_TEST(ParserTest, createTerms);
 
   void createTerms() {
     Term* term = createTerm();
@@ -201,10 +176,13 @@ private:
     }
   }
 
+  map<string,Variable*> _mapv;
+  map<string,Variable*>::iterator l_it;
+
   vector<Term *> _terms;
   Scanner _scanner;
   int _currentToken;
-  Node * _tree;
-  bool isComma = false;
+  //MatchExp* _root;
+  stack<Exp*> _expStack;
 };
 #endif

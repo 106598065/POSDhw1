@@ -2,57 +2,35 @@
 #define VARIABLE_H
 
 #include <string>
-#include "term.h"
-#include <iostream>
+#include "atom.h"
 using std::string;
-using namespace std;
 
 class Variable : public Term {
 public:
-  Variable(string s):Term(s), _inst(0){}
-  string value() const {
-    if (_inst){
-      //cout<<"HH = "<<(*_inst).value()<<endl;
-      //cout<<" u call varialbe value "<<endl;
-      return _inst->value();
-    }
-    else{
-      //cout<<" hello 2"<<endl;
-      return Term::value();
-    }
+  Variable(string s):Term(s), _instance(0) {
 
   }
-  bool match( Term & term ){
-    if (this == &term)
-      return true;
-    if(!_inst){
-      _inst = &term ;
-      return true;
-      //return (*_inst).symbol();
-    }
-    return _inst->match(term);
+
+  string value() const {
+    if (_instance)
+      return _instance->value();
+    else
+      return Term::value();
   }
-  /*string symbol() const{
-    string ret = _symbol;
-            //cout<<"HELLO"<<endl;
-      if(_inst){
-        ret += " = ";
-        ret += (*_inst).symbol();
-      }
-    return ret;
-  }*/
-  /*string value() const{
-    string ret = (*_inst).value();
-            cout<<"HELL1O = "<<(*_inst).value()<<endl;
-      /*if(_inst){
-        ret += " = ";
-        ret += (*_inst).value();
-          cout<<"HELL2O"<<endl;
-      }
-    return ret;
-  }*/
+
+  bool match( Term & term ) {
+    if (_instance != nullptr)
+      return _instance->match(term);
+    if (&term != this)
+      _instance = &term;
+    return true;
+  }
+
+  Variable* getVariable() {
+    return this;
+  }
 private:
-  Term * _inst;
+  Term * _instance;
 };
 
 #endif

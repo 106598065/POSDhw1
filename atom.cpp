@@ -1,7 +1,14 @@
 #include "atom.h"
-#include <string>
-#include <sstream>
-#include "term.h"
-using std::string;
+#include "variable.h"
+#include "iterator.h"
+//#include <typeinfo>
 
-Atom::Atom(string s){_symbol = s; }
+Iterator * Term::createIterator(){
+  return new NullIterator(this);
+}
+
+bool Term::match(Term & a){
+  if (a.getVariable() !=  nullptr)
+    return a.match(*this);
+  return symbol() == a.symbol();
+}
