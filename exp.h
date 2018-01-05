@@ -23,14 +23,14 @@ public:
     // TEST(Shell, conjunctionMatching_trueAndExp)
     if(evaluate()) {
       if( _left->symbol() == _right->symbol()) {
-              cout<<"FFFALSE1"<<endl;
+              //cout<<"FFFALSE1"<<endl;
         return "true";
       }else if( _left->symbol() == _right->value()) {
-        cout<<"FFFALSE2"<<endl;
+        //cout<<"FFFALSE2"<<endl;
         return "true";
       }
-            cout<<"FFFALSE3"<<endl;
-            cout<<"_left symbol = "<< _left->symbol()<<"right symbol"<< _right->symbol()<<endl;
+            //cout<<"FFFALSE3"<<endl;
+            //cout<<"_left symbol = "<< _left->symbol()<<"right symbol"<< _right->symbol()<<endl;
       return _left->symbol() + " = " + _right->value();
     }
     else if(!evaluate()) {
@@ -137,10 +137,10 @@ public:
   string getExpressionResult() {
     evaluate();
     if (_right->getExpressionResult() == "false"){
-      cout<<"RIGHT FALSE HERE"<<endl;
+      //cout<<"RIGHT FALSE HERE"<<endl;
       return _left->getExpressionResult();
     }else if (_left->getExpressionResult() == "false"){
-      cout<<"LEFT FALSE HERE"<<endl;
+      //cout<<"LEFT FALSE HERE"<<endl;
       return _right->getExpressionResult();
     }else{
       return _left->getExpressionResult() + "; " + _right->getExpressionResult();
