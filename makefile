@@ -9,6 +9,8 @@ else
 	g++ -o hw8 mainScanner.o atom.o list.o struct.o -lgtest -lpthread
 endif
 
+mainExtion.o: mainExtion.cpp expression.h exception.h
+	g++ -std=gnu++0x -c mainExtion.cpp
 
 utAtom: mainAtom.o list.o atom.o struct.o
 	g++ -o utAtom mainAtom.o atom.o list.o struct.o  -lgtest -lpthread
