@@ -1,10 +1,10 @@
+#ifndef EXPRESSION_H
+#define EXPRESSION_H
 
-/**
- *
- * Here are some examples for exception handling,
- * the actual testing way is base on your implementation.
- *
- */
+#include <string>
+#include "parser.h"
+#include "scanner.h"
+using namespace std;
 
 TEST(Shell, varMatchAtomSuc) {
   Scanner s("FILCO=awesome.");
@@ -369,3 +369,4 @@ TEST(Shell, exceptionMissingPeriodToken2) {
     ASSERT_EQ("Missing token '.'", msg);
   }
 }
+#endif
