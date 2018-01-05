@@ -26,17 +26,35 @@ string ss = "";
   }
 
 int main( int argc , char **argv ) {
-  string input;
+  string input, part, code = "";
+  stringstream inputStream;
 
 	do {
-		cout << "?-";
-		getline(cin, input);
-		if (checkcomanndcc123456(input) == "halt."){
-      break;
+    while ( input == "" || input.back() != '.') {
+      if(input ==""){
+        cout << "?-";
+      }else{
+        cout << "|  ";
+      }
+      getline(cin, input);
+      inputStream << input;
+      while ( inputStream >> part)
+        code += part ;
+
+      inputStream.str("");  // must have
+      inputStream.clear();  // for reuse inputStream
     }
-		if (checkcomanndcc123456(input) == ""){
-      continue;
-    }
+
+		// getline(cin, input);
+		// if (checkcomanndcc123456(input) == "halt."){
+    //   break;
+    // }
+		// if (checkcomanndcc123456(input) == ""){
+    //   continue;
+    // }
+    // if (checkcomanndcc123456(input) != "."){
+    //
+    // }
 		Scanner s(input);
 		Parser p(s);
 		try{
