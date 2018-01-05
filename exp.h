@@ -33,7 +33,7 @@ public:
             //cout<<"_left symbol = "<< _left->symbol()<<"right symbol"<< _right->symbol()<<endl;
       return _left->symbol() + " = " + _right->value();
     }
-    else if(!evaluate()) {
+    else{
       return "false";
     }
   }
@@ -136,12 +136,12 @@ public:
 
   string getExpressionResult() {
     evaluate();
-    if (_right->getExpressionResult() == "false"){
-      //cout<<"RIGHT FALSE HERE"<<endl;
-      return _left->getExpressionResult();
-    }else if (_left->getExpressionResult() == "false"){
+    if (_left->getExpressionResult() == "false"){
       //cout<<"LEFT FALSE HERE"<<endl;
       return _right->getExpressionResult();
+    }else if (_right->getExpressionResult() == "false"){
+      //cout<<"RIGHT FALSE HERE"<<endl;
+      return _left->getExpressionResult();
     }else{
       return _left->getExpressionResult() + "; " + _right->getExpressionResult();
     }
