@@ -5,6 +5,7 @@
  * the actual testing way is base on your implementation.
  *
  */
+
 TEST(Shell, exception_OnlyVariable) {
   Scanner s("X."); // this is our wrong expression.
   Parser p(s);
