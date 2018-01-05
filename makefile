@@ -1,4 +1,4 @@
-all: hw8
+all: hw8 shell
 
 hw8: mainExtion.o atom.o list.o struct.o scanner.h utScanner.h utParser.h parser.h
 ifeq (${OS}, Windows_NT)
@@ -7,9 +7,19 @@ else
 	g++ -o hw8 mainExtion.o atom.o list.o struct.o -lgtest -lpthread
 endif
 
+shell: mainShell.o atom.o list.o struct.o scanner.h utScanner.h utParser.h parser.h
+ifeq (${OS}, Windows_NT)
+	g++ -o shell mainShell.o atom.o list.o struct.o -lgtest
+else
+	g++ -o shell mainShell.o atom.o list.o struct.o -lgtest -lpthread
+endif
+##
+mainShell.o: mainExtion.cpp expression.h exception.h
+	g++ -std=gnu++0x -c mainShell.cpp
+
 mainExtion.o: mainExtion.cpp expression.h exception.h
 	g++ -std=gnu++0x -c mainExtion.cpp
-
+##
 utAtom: mainAtom.o list.o atom.o struct.o
 	g++ -o utAtom mainAtom.o atom.o list.o struct.o  -lgtest -lpthread
 mainAtom.o: mainAtom.cpp utList.h utAtom.h atom.h utStruct.h struct.h
@@ -41,6 +51,6 @@ mainIterator.o: mainIterator.cpp utIterator.h
 
 
 clean:
-	rm -f *.o madRace utAtom utVariable utScanner *hw8
+	rm -f *.o madRace utAtom utVariable utScanner hw8 shell
 stat:
 	wc *.h *.cpp
