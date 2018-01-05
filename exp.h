@@ -100,10 +100,10 @@ public:
       // }else if (_right->getExpressionResult() == "true" || _left->getExpressionResult().find(_right->getExpressionResult()) != string::npos){
       //   return _left->getExpressionResult();
       // }
-      if (_left->getExpressionResult() == "false" || _right->getExpressionResult() == "false"){
-        return "false";
-      }else if (_right->getExpressionResult() == "true" || _left->getExpressionResult().find(_right->getExpressionResult()) != string::npos){
+      if (_right->getExpressionResult() == "true" || _left->getExpressionResult().find(_right->getExpressionResult()) != string::npos){
         return _left->getExpressionResult();
+      }else if (_left->getExpressionResult() == "false" || _right->getExpressionResult() == "false"){
+        return "false";
       }else if (_left->getExpressionResult() == "true" && _right->getExpressionResult() == "true"){
         return "true";
       }else if (_left->getExpressionResult() == "true"){
