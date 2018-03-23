@@ -7,54 +7,17 @@
 
 using namespace std;
 
-
-string& checkcomanndcc123456(string &s) {
-int i = 0, index = 0;
-string ss = "";
-
-  if (s.empty()) {
-    return s;
-  }
-    for(i=0 ; i<s.size() ; i++){
-      if(s[i] != ' '){
-          index = i;
-          ss = ss + s[i];
-      }
-    }
-    s = ss;
-    return s;
-  }
+string& checkcomanndcc123456(string &s);
 
 int main( int argc , char **argv ) {
-  string input, part, code = "";
-  stringstream inputStream;
-
 	do {
-    while ( input == "" || input.back() != '.') {
-      if(input ==""){
-        cout << "?-";
-      }else{
-        cout << "|  ";
-      }
-      getline(cin, input);
-      inputStream << input;
-      while ( inputStream >> part)
-        code += part ;
-
-      inputStream.str("");  // must have
-      inputStream.clear();  // for reuse inputStream
-    }
-
-		// getline(cin, input);
-		// if (checkcomanndcc123456(input) == "halt."){
-    //   break;
-    // }
-		// if (checkcomanndcc123456(input) == ""){
-    //   continue;
-    // }
-    // if (checkcomanndcc123456(input) != "."){
-    //
-    // }
+		cout << "?-";
+		string input;
+		getline(cin, input);
+		if (checkcomanndcc123456(input) == "halt.")
+			break;
+		if (checkcomanndcc123456(input) == "")
+			continue;
 		Scanner s(input);
 		Parser p(s);
 		try{
@@ -65,5 +28,21 @@ int main( int argc , char **argv ) {
 			cout << msg << endl;
 		}
 	} while(true);
-  return 0;
+    return 0;
+}
+
+string& checkcomanndcc123456(string &s) {
+    if (s.empty()) {
+         return s;
+    }
+    int index = 0;
+    string str="";
+    for(int i=0 ; i<s.size() ; i++){
+        if(s[i] != ' '){
+            index = i;
+            str = str + s[i];
+        }
+    }
+    s = str;
+    return s;
 }
